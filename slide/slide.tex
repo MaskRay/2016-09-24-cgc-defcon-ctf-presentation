@@ -1,0 +1,437 @@
+\documentclass{beamer}
+
+
+%\usetheme{Darmstadt}
+\usetheme{Berkeley}
+\usecolortheme{rose}
+\useoutertheme{tree}
+\usefonttheme[onlylarge]{structurebold}
+\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+\setcounter{tocdepth}{1}
+
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{stmaryrd}
+\usepackage{tabularx}
+\usepackage[backend=bibtex]{biblatex}
+\defbibheading{bibliography}{}
+\bibliography{refs.bib}
+
+\usepackage[slantfont,boldfont]{xeCJK}
+\setCJKmainfont{"SimHei"}
+\setCJKmonofont{"SimHei"}
+%\setCJKmainfont{Adobe Heiti Std}
+%\setCJKmonofont{Adobe Heiti Std}
+
+\XeTeXlinebreaklocale "Hz"
+\XeTeXlinebreakskip = 0pt plus 1pt
+% \titleformat*{\section}{\centering\Large\bf}
+% \titleformat*{\subsection}{\bf}
+
+
+\title{Rise of the Machines: Cyber Grand Challenge及DEFCON 24 CTF决赛介绍}
+\author{宋方睿 MaskRay}
+\institute{https://maskray.me}
+\date{}
+
+\newcommand{\image}[1]{
+  \begin{frame}
+    \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{#1}
+  \end{frame}
+}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \tableofcontents
+\end{frame}
+
+\section{喵}
+
+{
+  \usebackgroundtemplate{
+    \tikz[overlay,remember picture]
+    \node[opacity=0.4, at=(current page.south east),anchor=south east,inner sep=0pt] {
+      \includegraphics[height=\paperheight]{img/me.jpg}};
+  }
+
+  \begin{frame}
+    \begin{block}{MaskRay}
+      \begin{itemize}[<+-|alert@+>]
+        \item 过期的算法竞赛+超算赛棍
+        \item 发霉的运维+FP爱好者
+        \item 变质的四届DEFCON CTF酱油
+      \end{itemize}
+    \end{block}
+  \end{frame}
+}
+
+\begin{frame}
+  \begin{block}{两个竞赛}
+    \begin{itemize}
+      \item Cyber Grand Challenge (CGC) Final Event，8月4日
+      \item DEFCON 24 Capture the Flag，8月5$\sim$7日
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Capture the Flag}
+
+\begin{frame}
+  \begin{block}{Capture the Flag}
+    \begin{itemize}
+      \item 逆向技术, 协议分析, 网络嗅探, 密码破解, 计算机取证, 编程
+      \item Codegate CTF, DEFCON CTF, Hack.lu CTF, Plaid CTF, SECCON CTF
+      \item 0CTF, BCTF, XCTF
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{形式}
+    \begin{itemize}[<+-|alert@+>]
+      \item jeopardy，Online Judge
+      \item attack-defense
+      \item CGC
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/a.jpg}
+
+\begin{frame}
+  \begin{block}{CGC}
+    \begin{itemize}
+      \item Cyber Reasoning System
+      \item 寻找漏洞
+      \item 修补漏洞
+      \item 分析攻击
+      \item 设置防火墙
+      \item 利用漏洞(exploit)
+      \item 1280 cores, 16TB ram, 128 TB storage
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Cyber Grand Challenge}
+
+\image{img/cgc-timeline.png}
+
+\begin{frame}
+  \begin{block}{CGC Qualifying Event}
+    \begin{itemize}
+      \item 24小时分析126个challenge binary (CB)
+      \item 产生让CB崩溃的交互
+      \item 修补CB，保留功能，性能也影响分数
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{DECREE环境}
+    \begin{itemize}
+      \item 修改的Linux 3.13.0，32位x86
+      \item ELF -> CGC(可执行文件格式)
+      \item allocate(mmap), deallocate(munmap), fdwait(select), random, receive(read), terminate(exit), transmit(write)
+      \item SIGPIPE Ign，SIGSEGV SIGILL SIGBUS Core，其他Term
+      \item 禁用address space layout randomization，禁用non-executable stack
+      \item CR4寄存器禁用performance monitoring center
+      \item static linking, homebrew libc
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{入围队伍}
+
+\begin{frame}
+  \begin{block}{CodeJitsu}
+    \begin{itemize}
+      \item University of California, Berkeley
+      \item \href{http://bitblaze.cs.berkeley.edu/}{BitBlaze} Binary Analysis Platform: Vine(static analysis), TEMU(dynamic analysis), Rudder(symbolic execution)
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/codejitsu.jpg}
+
+\begin{frame}
+  \begin{block}{ForAllSecure}
+    \begin{itemize}
+      \item CMU教授David Brumley發起的startup，成员多来自CyLab
+      \item \href{https://github.com/BinaryAnalysisPlatform}{Binary
+          Analysis Platform}
+      \item Plaid Parliament of Pwning是其undergraduate computer security research group。
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/forallsecure.jpg}
+
+\begin{frame}
+  \begin{block}{TECHx}
+    \begin{itemize}
+      \item GrammaTech \& University of Virginia Technology
+      \item Preventing Exploits of Software of Unknown Provenance
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/techx.jpg}
+
+\begin{frame}
+  \begin{block}{CSDS}
+    \begin{itemize}
+      \item University of Idaho
+      \item Jim Alves-Foss, Jia Song
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/csds.jpg}
+
+\begin{frame}
+  \begin{block}{DeepRed}
+    \begin{itemize}
+      \item Raytheon
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/deepred.jpg}
+
+\begin{frame}
+  \begin{block}{disekt}
+    \begin{itemize}
+      \item University Of Georgia
+      \item 2009年成立disekt CTF战队
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/disekt.jpg}
+
+\begin{frame}
+  \begin{block}{Shellphish}
+    \begin{itemize}
+      \item University of California, Santa Barbara
+      \item \href{http://angr.io}{angr}, a python framework for analyzing binaries. It focuses on both static and dynamic symbolic ("concolic") analysis
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/shellphish.jpg}
+
+\image{img/cgc-cfe.jpg}
+
+\begin{frame}
+  \begin{block}{CGC Final Event}
+    \begin{itemize}
+      \item 96轮
+      \item 比赛开始时CRS接收CB，每个CB以类似\texttt{socat tcp-l:9999 exec:cb}的形式提供服务
+      \item 每轮为每个$(round,team,service)$产生分数，$(*,team,*)$和为该队伍累计分数
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/cgc-rack.png}
+
+\begin{frame}
+  \begin{block}{$(round,team,service)$}
+    \begin{itemize}
+      \item $score = 100\times availability\times security\times evaluation$
+      \item $availability \in [0,1]$，通过poller的比例和内存时间开销
+      \item $security \in \{1,2\}$，被其他CRS攻击成功？
+      \item $evaluation \in [1,2]$，攻击其他CRS
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \small
+  \begin{table}
+    \begin{tabularx}{\textwidth}{|l|X|X|}
+      \hline
+      & attack-defense & CGC \\\hline
+      题目数量 & ~6 & 92 challenge sets(CFE)/8(DEFCON CTF) \\\hline
+      流量 & 主办方提供tcpdump & 自行在1999/udp接收(服务编号,连接号,流序号,消息长度等) \\\hline
+      平台 & amd64, aarch64, mipsel, $\ldots$ & DECREE \\\hline
+      服务 & 可ssh，替换服务文件 & API提交修补过的 \\\hline
+      可用性检测 & 主办方伪装成其他队伍检测 & 平台测试提交的CB \\\hline
+      攻击方式 & 手工, 程序 & 提交proof-of-vulnerability \\\hline
+      flag & 主办方每轮生成，服务程序有权限读取的文件 & magic page填充随机值 \\
+      防火墙 & executable wrapper & 类snort规则 \\\hline
+    \end{tabularx}
+  \end{table}
+\end{frame}
+
+\section{CB, Poller, POV, IDS}
+
+\begin{frame}
+  \begin{block}{Challenge binary}
+    \begin{itemize}
+      \item 题目用的可执行文件，特意设置了若干漏洞
+      \item 分析、修补、利用
+      \item API上传修补后的CB
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Poller generator}
+    \begin{itemize}
+      \item 检测CB可用性
+      \item finite state automaton
+      \item 至少1000000不同输出
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{}
+  \tiny
+  \begin{center}
+    \begin{minipage}{0.5\textwidth}
+      \begin{verbatim}
+nodes:
+- name: start
+- name: top
+- name: endIt
+- name: printAirports
+- name: addAirport
+- name: deleteAirport
+- name: findRoutes
+
+edges:
+- start: top
+- top: printAirports
+- printAirports: top
+- top: addAirport
+- addAirport: top
+- top: deleteAirport
+- deleteAirport: top
+- top: findRoutes
+- findRoutes: top
+- top: endIt
+  weight: .20
+      \end{verbatim}
+    \end{minipage}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Proof of vulnerability}
+    \begin{itemize}
+      \item C编写的CGC可执行文件
+      \item 构建方式和CB相同
+      \item Type 1 \& Type 2
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Type 1 vulnerability}
+    \begin{itemize}[<+-|alert@+>]
+      \item 控制EIP与8个general purpose register中任意一个
+      \item 如果证明能控制？
+      \item Challenge response, POV程序向平台宣称能控制寄存器的特定20 bits，平台指定20 bits的值
+      \item 程序崩溃时两个寄存器的值与challenge匹配
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Type 2 vulnerability}
+    \begin{itemize}
+      \item magic page
+      \item CGC可执行文件执行时，0x4347c000处内核分配一页，填充随机值
+      \item Challenge response，平台指定要输出magic page指定区间内的4字节
+      \item POV程序设法获取
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Intrusion detection system (IDS)}
+    \begin{itemize}
+      \item 防火墙规则
+      \item 可以阻挡攻击，也可能误伤poller generator
+      \item domain-specific language
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Proof of vulnerability (POV)}
+    \begin{itemize}
+      \item C编写的CGC可执行文件
+      \item 构建方式和CB相同
+      \item Type 1 \& Type 2
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Oracle}
+    \begin{itemize}
+      \item Input: CB, POV, IDS
+      \item Output: score, packet captures, others' CB \& IDS
+      \item 可以下载其他队伍的CB和IDS
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{Shellphish的CRS}
+
+\begin{frame}
+  \begin{block}{实现}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{统计}
+    \begin{itemize}
+      \item 82 Challenge Sets
+      \item 2442 exploits generated
+      \item longest exploit: 3791 lines of C code
+      \item shortest exploit: 226 lines of C code
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\section{DEFCON 24 CTF Finals}
+
+\begin{frame}
+  \begin{block}{b1o0p}
+    \begin{itemize}
+      \item \textcolor{blue}{bl}ue-lotus + \textcolor{red}{0op}s = \textcolor{blue}{b1}\textcolor{red}{o0p}
+      \item blue-lotus成立于清华大学网络与信息安全实验室，是中国首支入围DEFCON CTF全球决赛的战队
+      \item 上海交通大学0ops成立于2013年，成员主要来自于计算机系密码学与计算机安全实验室、信息安全工程学院等，大陆首支国际CTF赛事冠军战队，2015年ctftime排名第3。
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/b1o0p.jpg}
+
+\section{DEFCON 24 CTF CB}
+
+\begin{frame}
+  \begin{block}{b1o0p}
+    喵
+  \end{block}
+\end{frame}
+
+\section{References}
+
+\begin{frame}[t,allowframebreaks]
+  \begin{itemize}
+    \item http://kb.hitcon.org/post/131158681227/cyber-grand-challenge-%E7%B0%A1%E4%BB%8B
+  \end{itemize}
+  \printbibliography
+ \end{frame}
+
+\end{document}
