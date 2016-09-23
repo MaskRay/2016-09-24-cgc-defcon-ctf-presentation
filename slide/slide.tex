@@ -11,6 +11,7 @@
 \setbeamertemplate{blocks}[rounded][shadow=true] 
 \setcounter{tocdepth}{1}
 
+\usepackage{hyperref}
 \usepackage{minted}
 \usepackage{tikz}
 \usepackage{stmaryrd}
@@ -51,8 +52,6 @@
 \begin{frame}
   \tableofcontents
 \end{frame}
-
-\section{喵}
 
 {
   \usebackgroundtemplate{
@@ -98,15 +97,17 @@
     \begin{itemize}[<+-|alert@+>]
       \item jeopardy，Online Judge
       \item attack-defense
-      \item CGC
+      \item Cyber Grand Challenge
     \end{itemize}
   \end{block}
 \end{frame}
 
-\image{img/a.jpg}
+\image{img/bctf.jpg}
+
+\section{Cyber Grand Challenge}
 
 \begin{frame}
-  \begin{block}{CGC}
+  \begin{block}{Cyber Grand Challenge}
     \begin{itemize}
       \item Cyber Reasoning System
       \item 寻找漏洞
@@ -118,8 +119,6 @@
     \end{itemize}
   \end{block}
 \end{frame}
-
-\section{Cyber Grand Challenge}
 
 \image{img/cgc-timeline.png}
 
@@ -258,7 +257,7 @@
     \begin{tabularx}{\textwidth}{|l|X|X|}
       \hline
       & attack-defense & CGC \\\hline
-      题目数量 & ~6 & 92 challenge sets(CFE)/8(DEFCON CTF) \\\hline
+      题目数量 & $\sim$6 & 82 challenge sets(CFE)/8(DEFCON CTF) \\\hline
       流量 & 主办方提供tcpdump & 自行在1999/udp接收(服务编号,连接号,流序号,消息长度等) \\\hline
       平台 & amd64, aarch64, mipsel, $\ldots$ & DECREE \\\hline
       服务 & 可ssh，替换服务文件 & API提交修补过的 \\\hline
@@ -278,6 +277,7 @@
       \item 题目用的可执行文件，特意设置了若干漏洞
       \item 分析、修补、利用
       \item API上传修补后的CB
+      \item static linking，手写libc，鼓励每道题用不同libc
     \end{itemize}
   \end{block}
 \end{frame}
@@ -287,7 +287,9 @@
     \begin{itemize}
       \item 检测CB可用性
       \item finite state automaton
-      \item 至少1000000不同输出
+      \item 每条边指定转移概率
+      \item 每个顶点指定停止概率
+      \item Python脚本指定各个顶点执行的操作，产生输入或输出等
     \end{itemize}
   \end{block}
 \end{frame}
@@ -389,6 +391,13 @@ edges:
 
 \begin{frame}
   \begin{block}{实现}
+    \begin{itemize}
+      \item \url{https://github.com/mechaphish}
+      \item angr: binary loader + static analysis (control-flow graph, data-flow analysis, value-set analysis) + symbolic execution
+      \item Driller: fuzzying with selective symbolic execution (American fuzzy lop + angr)
+      \item patcherex: extended malloc, protect indirect call/jmp, return pointer encryption, randomly shift the stack, stack canary, backdoor, $\ldots$
+      \item database ORM model, qemu, scheduler, POV simulator, API interaction, $\ldots$
+    \end{itemize}
   \end{block}
 \end{frame}
 
@@ -406,6 +415,17 @@ edges:
 \section{DEFCON 24 CTF Finals}
 
 \begin{frame}
+  \begin{block}{DEFCON 24 CTF Finals}
+    \begin{itemize}
+      \item CTF届世界杯
+      \item Las Vegas，8月5$\sim$7日
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/ctf-platform.jpg}
+
+\begin{frame}
   \begin{block}{b1o0p}
     \begin{itemize}
       \item \textcolor{blue}{bl}ue-lotus + \textcolor{red}{0op}s = \textcolor{blue}{b1}\textcolor{red}{o0p}
@@ -417,21 +437,113 @@ edges:
 
 \image{img/b1o0p.jpg}
 
+\image{img/b1o0p-onsite.jpg}
+
+\begin{frame}
+  \begin{block}{结果}
+    \begin{itemize}[<+-|alert@+>]
+      \item PPP第一，b1o0p第二，DEFKOR第三
+      \item 奖品 = null
+      \item 不是我军无能，而是敌人太狡猾
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{我军}
+    \begin{itemize}
+      \item neoni，BinDiff，找出修补CB与原CB差异
+      \item \url{azure.kdays.cn}，F.L.I.R.T signatures、executable loader
+      \item hen，反汇编工具
+      \item 小花椒，可执行文件修补工具、流量分析重放
+      \item $\ldots$
+      \item libmaru，网络环境、主办方平台监控发送到slack
+      \item yu4fn、firesun、BrieflyX等，team interface网站
+      \item MaskRay，PCAP搜索、packet captures、POV检测
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\subsection{参赛队伍}
+
+\begin{frame}
+  \begin{block}{Mayhem}
+    \begin{itemize}[<+-|alert@+>]
+      \item ForAllSecure的Cyber Reasoning System
+      \item DEFCON CTF与CGC平台不一致，比赛前两天收到的流量有问题
+      \item 没能公平的较量实属遗憾
+      \item 8题做出7题应该不实，一题往往藏有数个漏洞。所有可执行文件都经过binary recompiler，MaskRay喵逆向不来
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/ppp.jpg}
+
+\image{img/geohot.jpg}
+
+\begin{frame}
+  \begin{block}{PPP}
+    \begin{itemize}[<+-|alert@+>]
+      \item DEFCON 21,22,24 CTF第一，2011、2013、2015 ctftime第一
+      \item geohot和Ricky Zhou为代表的Pwn机
+      \item 参与Mayhem开发的ForAllSecure成员
+      \item binary recompiler，Shellphish、binja等也有
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\image{img/defkor.jpg}
+
+\image{img/lokihardt.jpg}
+
+\begin{frame}
+  \begin{block}{DEFKOR}
+    \begin{itemize}[<+-|alert@+>]
+      \item 韩国梦之队，Best of Best计划学生
+      \item Jung Hoon Lee(lokihardt)，Pwn2Own 2015攻破IE 11 Chrome Safari
+      \item DEFCON 23 CTF第一
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{LC↯BC}
+    \begin{itemize}[<+-|alert@+>]
+      \item 俄罗斯，Yellowstone Yachtsclub of Yawning
+      \item OpenCTF 2016, 0CTF 2016第一
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{HITCON}
+    \begin{itemize}[<+-|alert@+>]
+      \item 大量ICPC选手：peter50216, Shik, seanwu, david942j
+      \item Orange Tsai，找出过Facebook, Uber, Yahoo多家大厂漏洞
+    \end{itemize}
+  \end{block}
+\end{frame}
+
 \section{DEFCON 24 CTF CB}
 
 \begin{frame}
-  \begin{block}{b1o0p}
-    喵
+  \begin{block}{实战}
   \end{block}
 \end{frame}
 
 \section{References}
 
-\begin{frame}[t,allowframebreaks]
-  \begin{itemize}
-    \item http://kb.hitcon.org/post/131158681227/cyber-grand-challenge-%E7%B0%A1%E4%BB%8B
-  \end{itemize}
-  \printbibliography
- \end{frame}
+\begin{frame}
+  \begin{block}{References}
+    \begin{itemize}
+      \item \href{http://kb.hitcon.org/post/131158681227/cyber-grand-challenge-\%E7\%B0\%A1\%E4\%BB\%8B}{Cyber Grand Challenge 簡介}
+      \item \href{http://www.slideshare.net/seiyalee/hitcon-cgcautonomous-hacking-and-patching/1}{從HITCON 駭客戰隊挑戰美國CGC天網機器人探討自動攻防技術發展}
+      \item \href{https://media.defcon.org/DEF\%20CON\%2024/DEF\%20CON\%2024\%20presentations/DEFCON-24-Shellphish-Cyber\%20Grand\%20Shellphish-UPDATED.pdf}{Cyber Grand Shellphish}
+      \item \href{http://cs.ucsb.edu/~antoniob/files/hitcon\_2015\_public.pdf}{A Dozen Years of Shellphish From DEFCON to the Cyber Grand Challenge}
+      \item \href{https://zhuanlan.zhihu.com/p/22005633}{机器的黎明--第24届DEF CON CTF总决赛亚军队员访谈}
+    \end{itemize}
+  \end{block}
+      %\printbibliography
+\end{frame}
 
 \end{document}
